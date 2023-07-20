@@ -36,6 +36,15 @@ addChild(scene, cameraEntity)
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
 addComponent(cubeEntity, newCubeMesh())
+# Adds a script component to cube entity, we use this helpful function:
+program(cubeEntity, proc(script: ScriptComponent) =
+    # We can rotate an object using euler also it is possible to directly set rotation property which is a quaternion.
+    script.transform.euler = vec3(
+        sin(runtime.age) * cos(runtime.age), 
+        cos(runtime.age), 
+        sin(runtime.age)
+    )
+)
 # Makes the cube enity child of the scene
 addChild(scene, cubeEntity)
 # Scale it up

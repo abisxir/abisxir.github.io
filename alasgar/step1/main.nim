@@ -3,11 +3,12 @@ import alasgar
 # Creates a window named Hello
 window("Hello", 640, 360)
    
-# Creates a new scene
-var scene = newScene()
+let 
+    # Creates a new scene
+    scene = newScene()
+    # Creates camera entity
+    cameraEntity = newEntity(scene, "Camera")
 
-# Creates camera entity
-var cameraEntity = newEntity(scene, "Camera")
 # Sets camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
@@ -24,7 +25,8 @@ addComponent(
 # Makes the camera entity child of the scene
 addChild(scene, cameraEntity)
 
-# Renders an empty sceene
+# Renders an empty scene
 render(scene)
 # Runs game main loop
 loop()
+

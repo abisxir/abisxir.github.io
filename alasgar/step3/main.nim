@@ -32,6 +32,15 @@ addComponent(
 # Makes the camera entity child of the scene
 addChild(scene, cameraEntity)
 
+# Creates cube entity, by default position is 0, 0, 0
+let cubeEntity = newEntity(scene, "Cube")
+# Add a cube mesh component to entity
+addComponent(cubeEntity, newCubeMesh())
+# Makes the cube enity child of the scene
+addChild(scene, cubeEntity)
+# Scale it up
+cubeEntity.transform.scale = vec3(2)
+
 # Renders an empty scene
 render(scene)
 # Runs game main loop

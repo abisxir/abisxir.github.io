@@ -211,7 +211,7 @@ addComponent(
 )
 # Adds a script component to light entity
 program(lightEntity, proc(script: ScriptComponent) =
-    const r = 10.0
+    const r = 7.0
     # Change position on transform
     script.transform.position = r * vec3(
         sin(runtime.age),

@@ -1,7 +1,7 @@
 import alasgar
 
 # Creates a window named Hello
-window("Hello", 640, 360)
+window("Hello", 960, 540)
    
 let 
     # Creates a new scene
@@ -53,7 +53,7 @@ addComponent(
 # Makes the light entity child of the scene
 addChild(scene, lightEntity)
 
-# Renders an empty sceene
+# Renders the scene
 render(scene)
 # Runs game main loop
 loop()

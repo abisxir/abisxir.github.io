@@ -36,6 +36,17 @@ addChild(scene, cameraEntity)
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
 addComponent(cubeEntity, newCubeMesh())
+# Adds a script component to cube entity, we use this helpful function:
+program(cubeEntity, proc(script: ScriptComponent) =
+    # We can rotate an object using euler also it is possible to directly set rotation property which is a quaternion.
+    script.transform.euler = vec3(
+        sin(runtime.age) * cos(runtime.age), 
+        cos(runtime.age), 
+        sin(runtime.age)
+    )
+)
+# Adds a material to cube
+addComponent(cubeEntity, newMaterialComponent(diffuseColor=parseHtmlName("Tomato")))
 # Makes the cube enity child of the scene
 addChild(scene, cubeEntity)
 # Scale it up
@@ -50,12 +61,14 @@ addComponent(
 )
 # Adds a script component to light entity
 program(lightEntity, proc(script: ScriptComponent) =
-    const r = 7.0
+    let 
+        r = 7.0
+        angle = runtime.age * 3.0
     # Change position on transform
     script.transform.position = r * vec3(
-        sin(runtime.age),
-        cos(runtime.age),
-        sin(runtime.age) * cos(runtime.age),
+        sin(angle),
+        cos(angle),
+        sin(angle) * cos(angle),
     )
 )
 # Also you can add using a suger function called "program", will explain it later
