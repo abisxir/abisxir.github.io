@@ -1,7 +1,7 @@
 import alasgar
 
 # Creates a window named Hello
-window("Hello", 640, 360)
+window("Step1", 830, 415)
    
 let 
     # Creates a new scene

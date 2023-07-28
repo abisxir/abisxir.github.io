@@ -1,7 +1,7 @@
 import alasgar
 
 # Creates a window named Hello
-window("Hello", 960, 540)
+window("Step8", 830, 415)
    
 let 
     # Creates a new scene
@@ -46,7 +46,11 @@ program(cubeEntity, proc(script: ScriptComponent) =
     )
 )
 # Adds a material to cube
-addComponent(cubeEntity, newMaterialComponent(diffuseColor=parseHtmlName("Tomato")))
+addComponent(cubeEntity, newMaterialComponent(
+    diffuseColor=parseHtmlName("white"),
+    specularColor=parseHtmlName("grey"),
+    albedoMap=newTexture("res://stone-texture.png")
+))
 # Makes the cube enity child of the scene
 addChild(scene, cubeEntity)
 # Scale it up
@@ -74,13 +78,6 @@ program(lightEntity, proc(script: ScriptComponent) =
 # Also you can add using a suger function called "program", will explain it later
 # Makes the light entity child of the scene
 addChild(scene, lightEntity)
-
-# Adds a material to cube
-addComponent(cubeEntity, newMaterialComponent(
-    diffuseColor=parseHtmlName("white"),
-    specularColor=parseHtmlName("grey"),
-    albedoMap=newTexture("res://stone-texture.png")
-))
 
 # Renders the scene
 render(scene)

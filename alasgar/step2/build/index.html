@@ -111,7 +111,7 @@ Prism.languages.nim={comment:{pattern:/#.*/,greedy:!0},string:{pattern:/(?:\b(?!
         border: 0px none; 
         background-color: #d7d1bf; 
         top: 50%; right: 50%;
-        transform: translate(50%,-50%);      
+        transform: translate(50%,-50%);
       }
 
       .code {
@@ -162,7 +162,7 @@ Prism.languages.nim={comment:{pattern:/#.*/,greedy:!0},string:{pattern:/(?:\b(?!
         <pre id="source" class="line-numbers"><code id="nim" class="language-nim">import alasgar
 
 # Creates a window named Hello
-window("Hello", 640, 360)
+window("Step2", 830, 415)
    
 let 
     # Creates a new scene
@@ -263,6 +263,41 @@ loop()
       };
     </script>
     <script async type="text/javascript" src="index.js"></script>
+    <script>
+      if(window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1') {
+        setTimeout(() => startRecording(), 5000);
+      }
+
+      function startRecording() {
+        console.log('start recording')
+        var canvas = document.getElementById('canvas')
+        const chunks = []; // here we will store our recorded media chunks (Blobs)
+        const stream = canvas.captureStream(); // grab our canvas MediaStream
+        const rec = new MediaRecorder(stream); // init the recorder
+        // every time the recorder has new data, we will store it in our array
+        rec.ondataavailable = e => chunks.push(e.data);
+        // only when the recorder stops, we construct a complete Blob from all the chunks
+        rec.onstop = e => exportVid(new Blob(chunks, {type: 'video/webm'}));
+        
+        rec.start();
+        setTimeout(()=>rec.stop(), 2 * 3.1415 * 1000); // stop recording in 3s
+      }
+      
+      function exportVid(blob) {
+        console.log('stop recording')
+        const vid = document.createElement('video');
+        vid.src = URL.createObjectURL(blob);
+        vid.controls = true;
+        document.body.appendChild(vid);
+        const a = document.createElement('a');
+        a.download = 'demo.webm';
+        a.href = vid.src;
+        a.textContent = 'Download recording';
+        //a.className = 'movie-link'
+        a.style = 'position: fixed; left: 10px; top: 10px; color: #454525; text-decoration: none;'
+        document.body.appendChild(a);
+      }      
+    </script>
   </body>
 </html>
 
