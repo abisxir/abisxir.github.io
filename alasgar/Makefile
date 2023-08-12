@@ -8,3 +8,6 @@ all:
 	cd step7; make all
 	cd step8; make all
 	cd step9; make all
+	cd step10; make all
+	cd step11; make all
+	cd step12; make all
