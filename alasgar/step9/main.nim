@@ -1,25 +1,23 @@
 import alasgar
+from snow import snowEffect
 
-# Creates a window named Hello
+# Creates a window named Step9
 window("Step9", 830, 415)
-   
+settings.exitOnEsc = true
+
 let 
     # Creates a new scene
     scene = newScene()
-    # Creates an environment component
-    env = newEnvironmentComponent()
-    # Creates camera entity
+    # Creates the camera entity
     cameraEntity = newEntity(scene, "Camera")
 
-# Sets background color
-setBackground(env, parseHex("d7d1bf"))
-# Adds environment component to scene
-addComponent(scene, env)
+# Sets the background color
+scene.background = parseHex("a7a19f")
 
-# Sets camera position
+# Sets the camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
     newPerspectiveCamera(
         75, 
@@ -30,85 +28,77 @@ addComponent(
     )
 )
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
+addEffect(cameraEntity[CameraComponent], "snowEffect", newCanvasShader(snowEffect))
+proc updateCamera(script: ScriptComponent) =
+    let 
+        # Gets camera component
+        camera = script[CameraComponent]
+        # Gets effect shader
+        effect = getEffect(camera, "snowEffect")
+    # Updates new value in shader
+    set(effect, "SPEED", 2.0)
+program(cameraEntity, updateCamera)
 
-# Creates cube entity, by default position is 0, 0, 0
+# Creates the cube entity, by default position is 0, 0, 0
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
-addComponent(cubeEntity, newCubeMesh())
-# Adds a script component to cube entity, we use this helpful function:
+add(cubeEntity, newCubeMesh())
+# Adds a script component to the cube entity
 program(cubeEntity, proc(script: ScriptComponent) =
-    # We can rotate an object using euler also it is possible to directly set rotation property which is a quaternion.
+    let t = 4 * runtime.age
+    # Rotates the cube using euler angles
     script.transform.euler = vec3(
-        sin(runtime.age) * cos(runtime.age), 
-        cos(runtime.age), 
-        sin(runtime.age)
+        sin(t),
+        cos(t),
+        sin(t) * cos(t),
     )
 )
-# Adds a material to cube
-addComponent(cubeEntity, newMaterialComponent(
-    diffuseColor=parseHtmlName("white"),
-    specularColor=parseHtmlName("grey"),
-    albedoMap=newTexture("res://stone-texture.png")
-))
 # Makes the cube enity child of the scene
-addChild(scene, cubeEntity)
+add(scene, cubeEntity)
 # Scale it up
 cubeEntity.transform.scale = vec3(2)
+# Sets the diffuse color
+cubeEntity.material.diffuseColor = parseHtmlName("White") 
+# Sets albedo map
+cubeEntity.material.albedoMap = newTexture("res://tiles08-diffuse.jpg")
+# Handles mouse hover in
+cubeEntity.onHover = proc(ic: InteractiveComponent, co: Collision) =
+    ic[MaterialComponent].emissiveColor = color(0.6, 0.6, 0.0)
+# Handles mouse hover out
+cubeEntity.onOut = proc(ic: InteractiveComponent)=
+    ic[MaterialComponent].emissiveColor = parseHtmlName("black")
+# Adds a bounding box component to the cube entity, uses mesh bounds
+addBoundingBox(cubeEntity)
 
-# Creates light entity
+# Creates the light entity
 let lightEntity = newEntity(scene, "Light")
+# Sets light position
+lightEntity.transform.position = vec3(3, 5, 4)
 # Adds a point light component to entity
-addComponent(
+add(
     lightEntity, 
     newPointLightComponent()
 )
-# Adds a script component to light entity
+# Adds a script component to the point light entity
 program(lightEntity, proc(script: ScriptComponent) =
     let 
-        r = 7.0
-        angle = runtime.age * 1.0
-    # Change position on transform
-    script.transform.position = r * vec3(
-        sin(angle),
-        cos(angle),
-        sin(angle) * cos(angle),
+        t = runtime.age
+        # Access to the point light component.
+        light = script[PointLightComponent]
+    # Or you can access it by calling getComponent function:
+    # let light = get[PointLightComponent](script)
+    # Changes light color
+    light.color = color(
+        abs(sin(t)), 
+        1, 
+        abs(cos(t))
     )
 )
-# Also you can add using a suger function called "program", will explain it later
 # Makes the light entity child of the scene
-addChild(scene, lightEntity)
+add(scene, lightEntity)
 
-# Creats spot point light entity
-let spotLightEntity = newEntity(scene, "SpotLight")
-# Sets position to (-6, 6, 6)
-spotLightEntity.transform.position = vec3(-6, 6, 6)
-# Adds a spot point light component
-addComponent(spotLightEntity, newSpotPointLightComponent(
-    vec3(0) - spotLightEntity.transform.position, # Light direction
-    color=parseHtmlName("Tomato"),                # Light color
-    luminance=200.0,                              # Light intensity
-    shadow=false,                                 # Casts shadow or not
-    innerCutoff=30,                               # Inner circle of light
-    outerCutoff=90                                # Outer circle of light
-))
-# Makes the new light child of the scene
-addChild(scene, spotLightEntity)
-
-# Creats direct light entity
-let directLightEntity = newEntity(scene, "DirectLight")
-# Adds a direct light component, and select camera direction for lighting
-addComponent(directLightEntity, newDirectLightComponent(
-    vec3(0) - cameraEntity.transform.position,    # Light direction
-    color=parseHtmlName("Aqua"),                  # Light color
-    luminance=150.0,                              # Light intensity
-    shadow=false,                                 # Casts shadow or not
-))
-# Makes the new light child of the scene
-addChild(scene, directLightEntity)
-
-# Renders the scene
+# Renders an empty scene
 render(scene)
 # Runs game main loop
 loop()
-

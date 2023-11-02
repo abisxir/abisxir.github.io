@@ -241,7 +241,7 @@ Prism.languages.nim={comment:{pattern:/#.*/,greedy:!0},string:{pattern:/(?:\b(?!
         rec.onstop = e => exportVid(new Blob(chunks, {type: 'video/webm'}));
         
         rec.start();
-        setTimeout(()=>rec.stop(), 2 * 3.1415 * 1000); // stop recording in 3s
+        setTimeout(()=>rec.stop(), 3.1415 * 1000); // stop recording in 3.1s
       }
       
       function exportVid(blob) {

@@ -1,6 +1,6 @@
 import alasgar
 
-# Creates a window named Hello
+# Creates a window named Step1
 window("Step1", 830, 415)
    
 let 
@@ -12,7 +12,7 @@ let
 # Sets camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
     newPerspectiveCamera(
         75, 
@@ -23,7 +23,7 @@ addComponent(
     )
 )
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
 
 # Renders an empty scene
 render(scene)

@@ -161,26 +161,22 @@ Prism.languages.nim={comment:{pattern:/#.*/,greedy:!0},string:{pattern:/(?:\b(?!
       <div class="code" id="code">
         <pre id="source" class="line-numbers"><code id="nim" class="language-nim">import alasgar
 
-# Creates a window named Hello
+# Creates a window named Step5
 window("Step5", 830, 415)
    
 let 
     # Creates a new scene
     scene = newScene()
-    # Creates an environment component
-    env = newEnvironmentComponent()
-    # Creates camera entity
+    # Creates the camera entity
     cameraEntity = newEntity(scene, "Camera")
 
-# Sets background color
-setBackground(env, parseHex("d7d1bf"))
-# Adds environment component to scene
-addComponent(scene, env)
+# Sets the background color
+scene.background = parseHex("d7d1bf")
 
-# Sets camera position
+# Sets the camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
     newPerspectiveCamera(
         75, 
@@ -191,39 +187,46 @@ addComponent(
     )
 )
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
 
-# Creates cube entity, by default position is 0, 0, 0
+# Creates the cube entity, by default position is 0, 0, 0
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
-addComponent(cubeEntity, newCubeMesh())
+add(cubeEntity, newCubeMesh())
+# Adds a script component to the cube entity
+program(cubeEntity, proc(script: ScriptComponent) =
+    let t = 2 * runtime.age
+    # Rotates the cube using euler angles
+    script.transform.euler = vec3(
+        sin(t),
+        cos(t),
+        sin(t) * cos(t),
+    )
+)
 # Makes the cube enity child of the scene
-addChild(scene, cubeEntity)
+add(scene, cubeEntity)
 # Scale it up
 cubeEntity.transform.scale = vec3(2)
+# Adds a material if it is not already added and sets the diffuse color
+cubeEntity.material.diffuseColor = parseHtmlName("Tomato") 
+# Also is possible to directly instantiate a component and add it to the cube
+# In the case that you like to write more code :)
+# addComponent(cubeEntity, newMaterialComponent(diffuseColor=parseHtmlName("Tomato")))
 
-# Creates light entity
+
+# Creates the light entity
 let lightEntity = newEntity(scene, "Light")
+# Sets light position
+lightEntity.transform.position = vec3(4, 5, 4)
 # Adds a point light component to entity
-addComponent(
+add(
     lightEntity, 
     newPointLightComponent()
 )
-# Adds a script component to light entity
-program(lightEntity, proc(script: ScriptComponent) =
-    const r = 7.0
-    # Change position on transform
-    script.transform.position = r * vec3(
-        sin(runtime.age),
-        cos(runtime.age),
-        sin(runtime.age) * cos(runtime.age),
-    )
-)
-# Also you can add using a suger function called "program", will explain it later
 # Makes the light entity child of the scene
-addChild(scene, lightEntity)
+add(scene, lightEntity)
 
-# Renders the scene
+# Renders an empty scene
 render(scene)
 # Runs game main loop
 loop()
@@ -310,7 +313,7 @@ loop()
         rec.onstop = e => exportVid(new Blob(chunks, {type: 'video/webm'}));
         
         rec.start();
-        setTimeout(()=>rec.stop(), 2 * 3.1415 * 1000); // stop recording in 3s
+        setTimeout(()=>rec.stop(), 3.1415 * 1000); // stop recording in 3.1s
       }
       
       function exportVid(blob) {
@@ -330,5 +333,4 @@ loop()
     </script>
   </body>
 </html>
-
 

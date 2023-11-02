@@ -1,25 +1,21 @@
 import alasgar
 
-# Creates a window named Hello
+# Creates a window named Step3
 window("Step3", 830, 415)
    
 let 
     # Creates a new scene
     scene = newScene()
-    # Creates an environment component
-    env = newEnvironmentComponent()
-    # Creates camera entity
+    # Creates the camera entity
     cameraEntity = newEntity(scene, "Camera")
 
-# Sets background color
-setBackground(env, parseHex("d7d1bf"))
-# Adds environment component to scene
-addComponent(scene, env)
+# Sets the background color
+scene.background = parseHex("d7d1bf")
 
-# Sets camera position
+# Sets the camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
     newPerspectiveCamera(
         75, 
@@ -30,16 +26,28 @@ addComponent(
     )
 )
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
 
-# Creates cube entity, by default position is 0, 0, 0
+# Creates the cube entity, by default position is 0, 0, 0
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
-addComponent(cubeEntity, newCubeMesh())
+add(cubeEntity, newCubeMesh())
 # Makes the cube enity child of the scene
-addChild(scene, cubeEntity)
+add(scene, cubeEntity)
 # Scale it up
 cubeEntity.transform.scale = vec3(2)
+
+# Creates the light entity
+let lightEntity = newEntity(scene, "Light")
+# Sets light position
+lightEntity.transform.position = vec3(5, 5, 5)
+# Adds a point light component to entity
+add(
+    lightEntity, 
+    newPointLightComponent()
+)
+# Makes the light entity child of the scene
+add(scene, lightEntity)
 
 # Renders an empty scene
 render(scene)

@@ -1,25 +1,21 @@
 import alasgar
 
-# Creates a window named Hello
+# Creates a window named Step4
 window("Step4", 830, 415)
    
 let 
     # Creates a new scene
     scene = newScene()
-    # Creates an environment component
-    env = newEnvironmentComponent()
-    # Creates camera entity
+    # Creates the camera entity
     cameraEntity = newEntity(scene, "Camera")
 
-# Sets background color
-setBackground(env, parseHex("d7d1bf"))
-# Adds environment component to scene
-addComponent(scene, env)
+# Sets the background color
+scene.background = parseHex("d7d1bf")
 
-# Sets camera position
+# Sets the camera position
 cameraEntity.transform.position = vec3(5, 5, 5)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
     newPerspectiveCamera(
         75, 
@@ -30,30 +26,40 @@ addComponent(
     )
 )
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
 
-# Creates cube entity, by default position is 0, 0, 0
+# Creates the cube entity, by default position is 0, 0, 0
 let cubeEntity = newEntity(scene, "Cube")
 # Add a cube mesh component to entity
-addComponent(cubeEntity, newCubeMesh())
+add(cubeEntity, newCubeMesh())
+# Adds a script component to the cube entity
+program(cubeEntity, proc(script: ScriptComponent) =
+    let t = 2 * runtime.age
+    # Rotates the cube using euler angles
+    script.transform.euler = vec3(
+        sin(t),
+        cos(t),
+        sin(t) * cos(t),
+    )
+)
 # Makes the cube enity child of the scene
-addChild(scene, cubeEntity)
+add(scene, cubeEntity)
 # Scale it up
 cubeEntity.transform.scale = vec3(2)
 
-# Creates light entity
+# Creates the light entity
 let lightEntity = newEntity(scene, "Light")
 # Sets light position
-lightEntity.transform.position = vec3(-5, 5, 5)
+lightEntity.transform.position = vec3(4, 5, 4)
 # Adds a point light component to entity
-addComponent(
+add(
     lightEntity, 
     newPointLightComponent()
 )
 # Makes the light entity child of the scene
-addChild(scene, lightEntity)
+add(scene, lightEntity)
 
-# Renders the scene
+# Renders an empty scene
 render(scene)
 # Runs game main loop
 loop()
