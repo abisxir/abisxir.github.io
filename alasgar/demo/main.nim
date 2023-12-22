@@ -1,64 +1,71 @@
-# Model Information:
-# * title:	Pokemon RSE - Pokemon Center
-# * source:	https://sketchfab.com/3d-models/pokemon-rse-pokemon-center-ae2858d8d212406ebe95927d4f17d328
-# * author:	Wesai (https://sketchfab.com/Wesai)
-# Model License:
-# * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
-# * requirements:	Author must be credited. Commercial use is allowed.
-
-# Model Information:
-# * title:	Robot RoCKet
-# * source:	https://sketchfab.com/3d-models/robot-rocket-f04d70f5a38943098da45f76e7ebb238
-# * author:	TeKen_art30 (https://sketchfab.com/ken_art30)
-# Model License:
-# * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
-# * requirements:	Author must be credited. Commercial use is allowed.
-
 import alasgar
 
+import stage
+import pig
+
+# Exists when ESC is pressed
+settings.exitOnEsc = true
+
 # Creates a window named Hello
-window("Demo", 830, 415)
+window("Demo", 1920, 1080)
    
 let 
     # Creates a new scene
     scene = newScene()
-    # Creates an environment component
-    env = newEnvironmentComponent()
     # Creates camera entity
     cameraEntity = newEntity(scene, "Camera")
 
 # Sets background color
-setBackground(env, parseHex("d7d1bf"))
-setAmbient(env, parseHex("ffffff"), 1.0)
-# Adds environment component to scene
-addComponent(scene, env)
+scene.background = parseHex("827972")
+scene.fogDensity = 0.0
+#scene.fogMinDistance = 10.0
+scene.ambient = parseHex("ffffff") * 1.0
 
 # Sets camera position
 cameraEntity.transform.position = vec3(7, 6, 10)
 # Adds a perspective camera component to entity
-addComponent(
+add(
     cameraEntity, 
+    #newOrthoCamera(
+    #    -10, 
+    #    10, 
+    #    -10, 
+    #    10, 
+    #    0.1, 
+    #    100.0, 
+    #    vec3(0) - cameraEntity.transform.position
+    #)
     newPerspectiveCamera(
-        75, 
+        45, 
         runtime.ratio, 
         0.1, 
         100.0, 
         vec3(0) - cameraEntity.transform.position
     )
 )
-#addCameraController(cameraEntity)
+addCameraController(cameraEntity, phi=0.5, distance=20.0)
 # Makes the camera entity child of the scene
-addChild(scene, cameraEntity)
+add(scene, cameraEntity)
 
 # Loads model from file
 let 
-    room = newEntity(scene, "Room")
-    pokemon = toEntity(load("res://pokemon/scene.gltf"), scene, castShadow=false, rootName="Pokemon")
+    stage1 = createStage(scene, 32, 12)
+    #model = load("res://gltf/Knight.glb")
+    #knight = toEntity(model, scene)
 
-pokemon.transform.scale = vec3(20)
-addChild(room, pokemon)
+for i in 1..10:
+    add(
+        stage1, 
+        createPig(
+            scene, 
+            stage1[StageComponent], 
+            (rand(32), rand(32))
+        )
+    )
 
-addChild(scene, room)
+add(scene, stage1)
+#addChild(stage1, knight)
+
 
 # Renders the scene
 render(scene)

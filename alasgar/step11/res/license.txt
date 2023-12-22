@@ -1,7 +1,0 @@
-## Battle Damaged Sci-fi Helmet - PBR
-* source: https://sketchfab.com/models/b81008d513954189a063ff901f7abfe4
-* author: [theblueturtle_](https://sketchfab.com/theblueturtle_), published under a Creative Commons Attribution-NonCommercial license
-
-## SkyBox Forgotten Ruins
-* source:	https://sketchfab.com/3d-models/free-skybox-forgotten-ruins-373864f2e84b4af6a02e23c529191004
-* author:	Paul (https://sketchfab.com/paul_paul_paul)

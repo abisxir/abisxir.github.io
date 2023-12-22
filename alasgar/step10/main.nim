@@ -11,7 +11,7 @@ let
 
 # Sets the background color
 scene.background = parseHex("d7d1bf")
-# Sets fog properties
+# Sets fog desnity to enable fog, fancy effect :)
 scene.fogDensity = 0.05
 
 # Sets the camera position

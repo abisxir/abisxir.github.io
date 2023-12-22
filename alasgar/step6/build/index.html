@@ -211,7 +211,7 @@ cubeEntity.transform.scale = vec3(2)
 cubeEntity.material.diffuseColor = parseHtmlName("White") 
 # Sets albedo map
 cubeEntity.material.albedoMap = newTexture("res://tiles08-diffuse.jpg")
-#cubeEntity.material.normalMap = newTexture("res://tiles08-normal.jpg")
+
 
 # Creates the light entity
 let lightEntity = newEntity(scene, "Light")
@@ -312,7 +312,7 @@ loop()
         rec.onstop = e => exportVid(new Blob(chunks, {type: 'video/webm'}));
         
         rec.start();
-        setTimeout(()=>rec.stop(), 3.1415 * 1000); // stop recording in 3s
+        setTimeout(()=>rec.stop(), 0.5 * 3.1415 * 1000); // stop recording in 3s
       }
       
       function exportVid(blob) {
