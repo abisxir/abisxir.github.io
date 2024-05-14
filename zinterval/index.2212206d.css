@@ -1,0 +1,100 @@
+@import "https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Jersey+10&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Comfortaa:wght@300..700&family=Jersey+10&display=swap";
+body {
+  background: #eee;
+  font-family: Comfortaa, sans-serif;
+}
+
+main {
+  justify-content: center;
+  margin: auto;
+  display: flex;
+}
+
+.button {
+  color: #154360;
+  border: none;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  display: flex;
+  box-shadow: 3px 3px 4px #0000001a, -2px -2px 3px #ffffffe6;
+}
+
+.inner-shadow {
+  filter: drop-shadow(-2px -2px 4px #ffffffb3);
+}
+
+circle {
+  transition: all .2s ease-out;
+}
+
+.action-container {
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+  display: flex;
+}
+
+.row {
+  flex-flow: wrap;
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.gap16 {
+  gap: 16px;
+}
+
+.gap32 {
+  gap: 32px;
+}
+
+h5 {
+  color: gray;
+  margin: 2px;
+  font-weight: 400;
+}
+
+h4 {
+  margin: 8px;
+}
+
+h3 {
+  margin: 0;
+}
+
+.timer {
+  margin-top: 24px;
+}
+
+.center {
+  justify-content: center;
+}
+
+input[type="number"], select, textarea {
+  box-sizing: border-box;
+  resize: vertical;
+  background-color: #ebebeb;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: inset 3px 3px 3px #cfc9c9, inset -3px -3px 3px #fdf5f5;
+}
+
+input[type="number"] button {
+  background: red;
+}
+
+.dashboard {
+  font-family: Black Ops One, system-ui;
+}
+/*# sourceMappingURL=index.2212206d.css.map */
