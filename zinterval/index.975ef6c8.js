@@ -3145,6 +3145,14 @@ const App = ()=>{
             onRestart: ()=>{
                 reset(context.restTime);
                 setBeat(beat + 1);
+            },
+            onStop: ()=>{
+                reset(context.restTime);
+                setContext({
+                    workoutTime: 0,
+                    restTime: 0,
+                    rounds: 0
+                });
             }
         }, void 0, false, {
             fileName: "src/index.js",
@@ -3163,7 +3171,7 @@ const App = ()=>{
             }
         }, void 0, false, {
             fileName: "src/index.js",
-            lineNumber: 140,
+            lineNumber: 148,
             columnNumber: 9
         }, undefined)
     }, void 0, false, {
@@ -3179,7 +3187,7 @@ const container = document.getElementById("app");
 const root = (0, _client.createRoot)(container);
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/index.js",
-    lineNumber: 160,
+    lineNumber: 168,
     columnNumber: 13
 }, undefined));
 var _c, _c1;
