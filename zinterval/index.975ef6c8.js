@@ -2962,11 +2962,10 @@ var _icons = require("./icons");
 var _progress = require("./progress");
 var _start = require("./start");
 var _s = $RefreshSig$();
-const restSound = new Audio(require("44690ed542019887"));
-const workoutSound = new Audio(require("c47ffa8408117e0f"));
-const doneSound = new Audio(require("ad69f18724bc6b19"));
-const tickSound = new Audio(require("c6d034490f993d86"));
-const halfSound = new Audio(require("53026832278fe8c3"));
+const playSoundEffect = (id)=>{
+    const e = document.getElementById(`${id}Effect`);
+    e.play();
+};
 const noSleep = new (0, _nosleepJsDefault.default)();
 const runtime = {
     rest: true,
@@ -3100,9 +3099,9 @@ const App = ()=>{
             if (runtime.timer <= 0) {
                 if (runtime.rest) {
                     runtime.rounds++;
-                    workoutSound.play();
-                } else if (runtime.rounds < context.rounds) restSound.play();
-                else doneSound.play();
+                    playSoundEffect("workout");
+                } else if (runtime.rounds < context.rounds) playSoundEffect("rest");
+                else playSoundEffect("done");
                 runtime.rest = !runtime.rest;
                 runtime.roundStart = new Date();
                 runtime.timer = getTotalTime(context);
@@ -3113,13 +3112,13 @@ const App = ()=>{
             } else {
                 if (!runtime.rest) {
                     if (runtime.timer == 4 && !runtime.tick1) {
-                        tickSound.play();
+                        playSoundEffect("tick");
                         runtime.tick1 = true;
                     } else if (runtime.timer == 2 && !runtime.tick2) {
-                        tickSound.play();
+                        playSoundEffect("tick");
                         runtime.tick2 = true;
                     } else if (!runtime.half && getTotalTime(context) >= 30 && runtime.timer <= getTotalTime(context) / 2) {
-                        halfSound.play();
+                        playSoundEffect("half");
                         runtime.half = true;
                     }
                 }
@@ -3160,7 +3159,7 @@ const App = ()=>{
             columnNumber: 9
         }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _start.Start), {
             onStart: ({ workoutTime, restTime, rounds })=>{
-                restSound.play();
+                playSoundEffect("rest");
                 reset(restTime);
                 setContext({
                     workoutTime,
@@ -3199,7 +3198,7 @@ $RefreshReg$(_c1, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","./index.css":"irmnC","./nosleep.js":"gGAx5","react":"21dqq","react-dom/client":"lOjBx","./icons":"26fsq","./progress":"hIN2b","./start":"k6CrM","44690ed542019887":"7GHvi","c47ffa8408117e0f":"gvpL5","ad69f18724bc6b19":"dq3wk","c6d034490f993d86":"1VCoj","53026832278fe8c3":"1UlgR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","./index.css":"irmnC","./nosleep.js":"gGAx5","react":"21dqq","react-dom/client":"lOjBx","./icons":"26fsq","./progress":"hIN2b","./start":"k6CrM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
 "use strict";
 module.exports = require("ee51401569654d91");
 
@@ -28449,56 +28448,6 @@ $RefreshReg$(_c1, "Start");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./progress":"hIN2b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7GHvi":[function(require,module,exports) {
-module.exports = require("b51dc33415b50b6a").getBundleURL("bLxZJ") + "rest.48e6b6fd.ogg" + "?" + Date.now();
-
-},{"b51dc33415b50b6a":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-}
-// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"gvpL5":[function(require,module,exports) {
-module.exports = require("e45c32b7c6c153c2").getBundleURL("bLxZJ") + "workout.acecfd40.ogg" + "?" + Date.now();
-
-},{"e45c32b7c6c153c2":"lgJ39"}],"dq3wk":[function(require,module,exports) {
-module.exports = require("125f1e7622ae8fa0").getBundleURL("bLxZJ") + "done.cc248167.ogg" + "?" + Date.now();
-
-},{"125f1e7622ae8fa0":"lgJ39"}],"1VCoj":[function(require,module,exports) {
-module.exports = require("93c5ef941a3f54b9").getBundleURL("bLxZJ") + "tick.1235fe3b.ogg" + "?" + Date.now();
-
-},{"93c5ef941a3f54b9":"lgJ39"}],"1UlgR":[function(require,module,exports) {
-module.exports = require("dee9a520b46bbac5").getBundleURL("bLxZJ") + "half.a43f09a5.ogg" + "?" + Date.now();
-
-},{"dee9a520b46bbac5":"lgJ39"}]},["farZc","1xC6H","8lqZg"], "8lqZg", "parcelRequirebd11")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./progress":"hIN2b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["farZc","1xC6H","8lqZg"], "8lqZg", "parcelRequirebd11")
 
 //# sourceMappingURL=index.975ef6c8.js.map
